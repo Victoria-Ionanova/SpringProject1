@@ -43,7 +43,7 @@
     <input type="text" th:field="*{email}"/>
     <br/>
     Birthday:
-    <input type="text" th:field="*{birthday}"/>
+    <input type="date" th:field="*{birthday}"/>
     <span class="validationError"
           th:if="${#fields.hasErrors('birthday')}"
           th:errors="*{birthday}"
