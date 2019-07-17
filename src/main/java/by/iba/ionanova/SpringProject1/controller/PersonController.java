@@ -1,5 +1,6 @@
 package by.iba.ionanova.SpringProject1.controller;
 
+import by.iba.ionanova.SpringProject1.aop.LogAnnotation;
 import by.iba.ionanova.SpringProject1.dto.NewPersonDto;
 import by.iba.ionanova.SpringProject1.entity.Person;
 import by.iba.ionanova.SpringProject1.exceptions.NoSuchEntityException;
@@ -37,17 +38,15 @@ public class PersonController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         model.addAttribute("message", message);
-        log.info("index was called");
         return modelAndView;
     }
+    @LogAnnotation
     @GetMapping(value = {"/personList"})
     public ModelAndView personList(Model model) {
         List<Person> persons = personService.getAllPerson();
-        log.info("person List" + persons);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("personList");
         model.addAttribute("persons", persons);
-        log.info("/personList was called");
         return modelAndView;
     }
     @GetMapping(value = {"/addPerson"})
@@ -55,7 +54,6 @@ public class PersonController {
         ModelAndView modelAndView = new ModelAndView("addPerson");
         NewPersonDto personForm = new NewPersonDto();
         model.addAttribute("personForm", personForm);
-        log.info("/addPerson - GET was called" + personForm);
         return modelAndView;
     }
     // @PostMapping("/addPerson")
@@ -66,7 +64,6 @@ public class PersonController {
                                            NewPersonDto personDto,
                                    Errors errors) {
         ModelAndView modelAndView = new ModelAndView();
-        log.info("/addPerson - POST was called" + personDto);
         if (errors.hasErrors()) {
             modelAndView.setViewName("addPerson");
         }
@@ -85,7 +82,6 @@ public class PersonController {
                     city, zip, email, birthday);
             personService.addNewPerson(newPerson);
             model.addAttribute("persons", personService.getAllPerson());
-            log.info("/addPerson - POST was called");
             return modelAndView;
         }
         return modelAndView;
@@ -104,7 +100,6 @@ public class PersonController {
     public ModelAndView editPerson( @Valid @ModelAttribute("person") Person
                                             person,
                                     Errors errors) {
-        log.info("/editPerson - POST was called"+ person);
         personService.addNewPerson(person);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/personList");
