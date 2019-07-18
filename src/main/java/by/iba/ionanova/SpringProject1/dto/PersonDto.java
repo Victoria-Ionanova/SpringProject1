@@ -18,5 +18,4 @@ public class PersonDto {
     private String zip;
     private String email;
     private Date birthday;
-    private String phone;
 }
